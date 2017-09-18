@@ -4,6 +4,9 @@
   "description": "Get notifications about Vanderbilt campus dining The Pub's ready meals",
   "main": "index.js",
   "author": "Benjamin Cooper",
+  "scripts": {
+    "start": "node index.js"
+  },
   "license": "MIT",
   "dependencies": {
     "array-intersection": "^0.1.2",
