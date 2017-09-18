@@ -26,7 +26,7 @@ function updateDatabaseOrders() {
 }
 
 
-updateDatabaseOrders();
+
 
 
 /*
@@ -84,9 +84,9 @@ function handleMatchedNumbers(orderNumbers) {
     for (var i = 0; i < orderNumbers.length; i++) {
         //textOrder(orderNumbers[i]);
         console.log(orderNumbers[i]);
-      
 
-        database.ref('vals/' + orderNumbers[i]).remove() // finished with order, get rid of it
+
+        database.ref('vals/' + orderNumbers[i]).remove() // finished with order, get rid of it in database
             .then(function() {
                 console.log("Remove succeeded.")
             })
@@ -94,5 +94,14 @@ function handleMatchedNumbers(orderNumbers) {
 }
 
 //requestPub(checkNumbers)
-handleMatchedNumbers([201]);
-//setInterval(requestPub(checkNumbers), 1500);
+//handleMatchedNumbers([201]);
+updateDatabaseOrders();
+requestPub(checkNumbers);
+setInterval(function() {
+    updateDatabaseOrders();
+    console.log('database');
+}, 300000);
+setInterval(function() {
+    requestPub(checkNumbers);
+    console.log('pub');;
+}, 30000);
