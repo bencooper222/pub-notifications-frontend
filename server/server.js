@@ -3,10 +3,12 @@ var app = express();
 var bodyParser = require('body-parser')
 var config = require('./config');
 var bcrypt = require('bcrypt');
+var cors = require('cors');
 
 var jsonParser = bodyParser.json();
 var urlParser = bodyParser.urlencoded({ extended: false })
 
+app.use(cors({ origin: 'https://benc.io' }));
 
 var exports = {};
 
