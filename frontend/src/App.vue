@@ -1,33 +1,92 @@
 <template>
-    <div id="app">
-      <h1>Pub Notifications</h1>
-      <p>Enter your order number and phone number and this will text you when your order is ready!</p><!-- figure out form stuff !-->
-      <form action="" method="post">
-        <div class="field">
-          <label>Order #</label> <input maxlength="3" title="Three digit order number." pattern="[1-9][0-9]{2}" id="order">
+        <div id="app">
+            <h1>Pub Notifications</h1>
+            <transition name="fade">
+                <div v-if="!submitted">
+                    <p>Enter your order number and phone number and this will text you when your order is ready!</p>
+                    <!-- figure out form stuff !-->
+    
+                    <div class="field">
+                        <label>Order #</label>
+                        <input v-model="order" maxlength="3" title="Three digit order number." id="order" name="order">
+                    </div>
+                    <div class="field">
+                        <label>US Phone #</label>
+                        <input v-model="phone" maxlength="10" title="10 digit number, no dashes, or parentheses." id="phone" name="phone">
+                    </div>
+                    <div class="field">
+                        <label>Passcode</label>
+                        <input v-model="passcode" maxlength="3" id="passcode" name="passcode">
+                    </div>
+    
+    
+                    <button v-on:click="submitForm" :disabled="disabled" id="submit" type="submit" value="submit">Submit</button>
+                </div>
+                <div v-else>
+                    <span id="check">✔️ Submitted</span>
+                    <br>
+                    <b>Keep an eye on your phone for a text!</b>
+                    </br>
+                </div>
+            </transition>
+            <br>
+            <br>
+        <p class="extra-info"><a href="https://github.com/bencooper222/pub-notifications/blob/master/disclaimers.md">Disclaimers</a> &nbsp; </p><p class="extra-info">|</p><p class="extra-info"> &nbsp; <a href="https://github.com/bencooper222/pub-notifications">Code</a>&nbsp;&nbsp;|&nbsp;&nbsp;</p><p class="extra-info"><a href="http://campusdining.vanderbilt.edu/?action=cmi_yoir&request=screen&location_id=752">  API</a></p>
+            <p id="love">Made with <span class="red">❤</span> by Ben Cooper</p>
+            
         </div>
-        <div class="field">
-          <label>US Phone #</label> <input maxlength="10" pattern="[1-9][0-9]{9}"  title="10 digit number, no dashes, or parentheses." id="phone">
-        </div>
-        <div class="field">
-          <label>Passcode</label> <input maxlength="3" id="passcode">
-        </div>
-        
-        
-        <button id="submit" type="submit" value="submit">Submit</button>
-      </form>
-      <p>Made with <span class="red">❤</span> by Ben Cooper</p>
-    </div>
-  </template>
+    </template>
 
 <script>
     export default {
         name: 'app',
         data() {
             return {
-                msg: 'Welcome to Your Vue.js App'
+                order: "",
+                phone: "",
+                passcode: "",
+                submitted: false
+
             }
+        },
+        computed: {
+            disabled: function() {
+
+                if (!this.order.match(/[1-9][0-9]{0,2}/)) { // order number is three digits                    
+                    return true;
+                }
+                if (!this.phone.match(/[1-9][0-9]{9}/)) { //phone number is 10 digits             
+                    return true;
+                }
+                if (this.passcode.length != 3 || this.passcode == "") { //passcode is three chars                   
+                    return true;
+                }
+                return false;
+            }
+        },
+        methods: {
+            submitForm: function() {
+
+
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", 'http://localhost:3000', true);
+
+                //Send the proper header information along with the request
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                var _this = this;
+                xhr.onreadystatechange = function() { //Call a function when the state changes.
+                    if (xhr.status == 200) {
+                        // Request finished. Do processing here.
+                        _this.submitted = true;
+                    }
+                }
+                xhr.send('order=' + this.order + "&phone=" + this.phone + "&passcode=" + this.passcode);
+                this.submitted= true;
+            }
+        
         }
+
     }
 </script>
 
@@ -51,6 +110,10 @@
         padding: 0;
     }
     
+    #check{
+        font-size: 128px;
+        color: green;
+    }
     li {
         display: inline-block;
         margin: 0 10px;
@@ -58,6 +121,17 @@
     
     a {
         color: #42b983;
+    }
+
+
+#love{
+    margin-top:3px;
+    margin-bottom: 0px;
+}
+    .extra-info{
+        display: inline-block;
+        margin-top:0px;
+        margin-bottom: 0px;
     }
     
     .red {
@@ -75,15 +149,28 @@
         padding-left: 44.85%;
         margin-bottom: 0px;
     }
-    .field>input{
-      padding-top: 0px;
+    
+    .field>input {
+        padding-top: 0px;
     }
-    .field{
-      display:block;
-      margin-bottom: 7px;
+    
+    .field {
+        display: block;
+        margin-bottom: 7px;
     }
-
-    #submit{
-      margin-top: 4px;
+    
+    #submit {
+        margin-top: 4px;
     }
+    #passcode{
+        -webkit-text-security: disc;
+        -moz-text-security: disc;
+        text-security: disc;
+    }
+    .fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
+}
 </style>
