@@ -55,7 +55,7 @@ function updateDatabaseOrders() {
  */
 function requestPub(processNumbers) {
    
-    restler.get("http://campusdining.vanderbilt.edu/?action=cmi_yoir&request=orderqueue_ajax&location_id=752").on('success', function(result, response) {
+    restler.get(config.pubUrl).on('success', function(result, response) {
         //console.log(result);
         var orders = JSON.parse(result);
         var orderNumbers = [];

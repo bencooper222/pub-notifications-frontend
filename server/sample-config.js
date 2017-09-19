@@ -16,4 +16,5 @@ config.firebase.messagingSenderId = "YOUR FIREBASE MESSAGING SENDER ID";
 
 config.verification = "BCRYPT HASH WITH 0 SALT ROUNDS OF YOUR PASSCODE" 
 
+config.pubUrl = "http://campusdining.vanderbilt.edu/?action=cmi_yoir&request=orderqueue_ajax&location_id=752";
 module.exports = config;    
