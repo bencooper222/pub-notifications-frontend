@@ -74,7 +74,7 @@ function requestPub(processNumbers) {
  * Checks all numbers that are part of the numbers that should be searched for
  */
 function checkNumbers(allNumbers, handleMatchedNumbers) {
-   if(numberPairs==={}){
+   if(numberPairs==undefined || numberPairs == null){
        return;
    } 
     
