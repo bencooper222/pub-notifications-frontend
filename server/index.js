@@ -74,6 +74,10 @@ function requestPub(processNumbers) {
  * Checks all numbers that are part of the numbers that should be searched for
  */
 function checkNumbers(allNumbers, handleMatchedNumbers) {
+   if(numberPairs==={}){
+       return;
+   } 
+    
     var searchNumbers = Object.keys(numberPairs);
 
 
