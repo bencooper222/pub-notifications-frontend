@@ -2,7 +2,7 @@
     <div id="app">
         <h1>Pub Notifications</h1>
         <transition name="fade">
-            <div v-if="!submitted">
+            <div v-if="submitted === 'no'">
                 <p>Enter your order number and phone number and this will text you when your order is ready!</p>
                 <!-- figure out form stuff !-->
              
@@ -26,10 +26,16 @@
                     <button v-on:click="submitForm" :disabled="disabled" id="submit" type="submit" value="submit">Submit</button>
                 
             </div>
-            <div v-else>
+            <div v-else-if="submitted === 'success'">
                 <span id="check">✔️ Submitted</span>
                 <br>
                 <b>Keep an eye on your phone for a text!</b>
+                </br>
+            </div>
+            <div v-else-if="submitted === 'failure'">
+                <span id="cross"> ❌ Failure</span>
+                <br>
+                <b>It didn't work. Pretend there's a helpful error message here.</b>
                 </br>
             </div>
         </transition>
@@ -53,11 +59,11 @@
                 order: "",
                 phone: "",
                 passcode: "",
-                submitted: false
+                submitted: "no"
 
             }
         },
-        mounted: function(){
+        mounted: function() {
             this.phone = localStorage.getItem("phone");
         },
         computed: {
@@ -77,26 +83,27 @@
         },
         methods: {
             submitForm: function() {
-                localStorage.setItem("phone",this.phone);
+                localStorage.setItem("phone", this.phone);
                 let data = {};
                 data.order = this.order;
                 data.phone = this.phone;
                 data.passcode = this.passcode;
 
                 let _this = this;
-                fetch('https://pub.benc.io', {
+                fetch('https://pb.benc.io', {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                     body: 'order=' + this.order + "&phone=" + this.phone + "&passcode=" + this.passcode
-                }).then(function(){
-                    _this.submitted = true;
-                })
-                ;
+                }).then(function() {
+                    _this.submitted = "success";
+                }).catch(function(error){
+                    _this.submitted = "failure";   
+                });
 
-           
+
             }
 
         }
@@ -120,8 +127,13 @@
     }
     
     #check {
-        font-size: 128px;
         color: green;
+    }
+
+    #cross{
+        font-size: 128px;
+
+        color: red;
     }
     
     li {
