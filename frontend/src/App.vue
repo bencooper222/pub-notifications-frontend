@@ -88,26 +88,7 @@
                     body: 'order=' + this.order + "&phone=" + this.phone + "&passcode=" + this.passcode
                 })
 
-                /*
-
-                                var xhr = new XMLHttpRequest();
-                                xhr.open("POST", 'https://pub.benc.io', true);
-
-                                //Send the proper header information along with the request
-                                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                                var _this = this;
-                                xhr.onreadystatechange = function() { //Call a function when the state changes.
-                                    //console.log(xhr);
-                                    if (xhr.status == 200) {
-                                        // Request finished. Do processing here.
-                                        
-                                        _this.submitted = true;
-                                    }
-                                }
-                                xhr.send('order=' + this.order + "&phone=" + this.phone + "&passcode=" + this.passcode);
-                                console.log(xhr);
-                                //this.submitted = true;
-                            */
+           
             }
 
         }
