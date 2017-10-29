@@ -83,13 +83,18 @@
                 data.phone = this.phone;
                 data.passcode = this.passcode;
 
+                let _this = this;
                 fetch('https://pub.benc.io', {
                     method: 'POST',
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                     body: 'order=' + this.order + "&phone=" + this.phone + "&passcode=" + this.passcode
-                });
+                }).then(function(){
+                    _this.submitted = true;
+                })
+                ;
 
            
             }
