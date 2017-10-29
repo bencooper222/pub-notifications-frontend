@@ -57,6 +57,9 @@
 
             }
         },
+        mounted: function(){
+            this.phone = localStorage.getItem("phone");
+        },
         computed: {
             disabled: function() {
 
@@ -74,7 +77,7 @@
         },
         methods: {
             submitForm: function() {
-
+                localStorage.setItem("phone",this.phone);
                 let data = {};
                 data.order = this.order;
                 data.phone = this.phone;
@@ -86,7 +89,7 @@
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                     body: 'order=' + this.order + "&phone=" + this.phone + "&passcode=" + this.passcode
-                })
+                });
 
            
             }
