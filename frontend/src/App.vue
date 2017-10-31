@@ -1,41 +1,49 @@
 <template>
-        <div id="app">
-            <h1>Pub Notifications</h1>
-            <transition name="fade">
-                <div v-if="!submitted">
-                    <p>Enter your order number and phone number and this will text you when your order is ready!</p>
-                    <!-- figure out form stuff !-->
-    
+    <div id="app">
+        <h1>Pub Notifications</h1>
+        <transition name="fade">
+            <div v-if="!submitted">
+                <p>Enter your order number and phone number and this will text you when your order is ready!</p>
+                <!-- figure out form stuff !-->
+             
                     <div class="field">
                         <label>Order #</label>
                         <input v-model="order" maxlength="3" title="Three digit order number." id="order" name="order">
                     </div>
+                    <br>
                     <div class="field">
                         <label>US Phone #</label>
                         <input v-model="phone" maxlength="10" title="10 digit number, no dashes, or parentheses." id="phone" name="phone">
                     </div>
+                    <br>
                     <div class="field">
                         <label>Passcode</label>
+                        
                         <input v-model="passcode" maxlength="3" id="passcode" name="passcode">
                     </div>
-    
-    
-                    <button v-on:click="submitForm" :disabled="disabled" id="submit" type="submit" value="submit">Submit</button>
-                </div>
-                <div v-else>
-                    <span id="check">✔️ Submitted</span>
+
                     <br>
-                    <b>Keep an eye on your phone for a text!</b>
-                    </br>
-                </div>
-            </transition>
-            <br>
-            <br>
-        <p class="extra-info"><a href="https://github.com/bencooper222/pub-notifications/blob/master/disclaimers.md">Disclaimers</a> &nbsp; </p><p class="extra-info">|</p><p class="extra-info"> &nbsp; <a href="https://github.com/bencooper222/pub-notifications">Code</a>&nbsp;&nbsp;|&nbsp;&nbsp;</p><p class="extra-info"><a href="http://campusdining.vanderbilt.edu/?action=cmi_yoir&request=screen&location_id=752">  API</a></p>
-            <p id="love">Made with <span class="red">❤</span> by Ben Cooper</p>
-            
-        </div>
-    </template>
+                    <button v-on:click="submitForm" :disabled="disabled" id="submit" type="submit" value="submit">Submit</button>
+                
+            </div>
+            <div v-else>
+                <span id="check">✔️ Submitted</span>
+                <br>
+                <b>Keep an eye on your phone for a text!</b>
+                </br>
+            </div>
+        </transition>
+        <br>
+        <br>
+        <p class="extra-info"><a href="https://github.com/bencooper222/pub-notifications/blob/master/disclaimers.md">Disclaimers</a></p>
+        <p class="extra-info">|</p>
+        <p class="extra-info">  <a href="https://github.com/bencooper222/pub-notifications">Code</a>&nbsp;|</p>
+        <p class="extra-info"><a href="http://campusdining.vanderbilt.edu/?action=cmi_yoir&request=screen&location_id=752">  API</a>
+        </p>
+        <p id="love">Made with <span class="red">❤</span> by Ben Cooper</p>
+
+    </div>
+</template>
 
 <script>
     export default {
@@ -48,6 +56,9 @@
                 submitted: false
 
             }
+        },
+        mounted: function(){
+            this.phone = localStorage.getItem("phone");
         },
         computed: {
             disabled: function() {
@@ -66,25 +77,28 @@
         },
         methods: {
             submitForm: function() {
+                localStorage.setItem("phone",this.phone);
+                let data = {};
+                data.order = this.order;
+                data.phone = this.phone;
+                data.passcode = this.passcode;
 
+                let _this = this;
+                fetch('https://pub.benc.io', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'order=' + this.order + "&phone=" + this.phone + "&passcode=" + this.passcode
+                }).then(function(){
+                    _this.submitted = true;
+                })
+                ;
 
-
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", 'http://localhost:3000', true);
-
-                //Send the proper header information along with the request
-                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                var _this = this;
-                xhr.onreadystatechange = function() { //Call a function when the state changes.
-                    if (xhr.status == 200) {
-                        // Request finished. Do processing here.
-                        _this.submitted = true;
-                    }
-                }
-                xhr.send('order=' + this.order + "&phone=" + this.phone + "&passcode=" + this.passcode);
-                this.submitted= true;
+           
             }
-        
+
         }
 
     }
@@ -105,15 +119,11 @@
         font-weight: normal;
     }
     
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-    
-    #check{
+    #check {
         font-size: 128px;
         color: green;
     }
+    
     li {
         display: inline-block;
         margin: 0 10px;
@@ -122,15 +132,15 @@
     a {
         color: #42b983;
     }
-
-
-#love{
-    margin-top:3px;
-    margin-bottom: 0px;
-}
-    .extra-info{
+    
+    #love {
+        margin-top: 3px;
+        margin-bottom: 0px;
+    }
+    
+    .extra-info {
         display: inline-block;
-        margin-top:0px;
+        margin-top: 0px;
         margin-bottom: 0px;
     }
     
@@ -146,7 +156,7 @@
         font-weight: 700;
         text-transform: none;
         text-align: left;
-        padding-left: 44.85%;
+        //  padding-left: 44.85%;
         margin-bottom: 0px;
     }
     
@@ -155,22 +165,30 @@
     }
     
     .field {
-        display: block;
+        display: inline-block;
         margin-bottom: 7px;
     }
     
     #submit {
         margin-top: 4px;
     }
-    #passcode{
+    
+    #passcode {
         -webkit-text-security: disc;
         -moz-text-security: disc;
         text-security: disc;
     }
-    .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0
-}
+    
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 1s
+    }
+    
+    .fade-enter,
+    .fade-leave-to
+    /* .fade-leave-active below version 2.1.8 */
+    
+    {
+        opacity: 0
+    }
 </style>

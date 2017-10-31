@@ -20,14 +20,21 @@ var numberPairs = {};
 
 
 function handleUserRequest(data){
-    var databaseEntry = {}
-    databaseEntry[data.order] = data.phone;
-  
-    var newPushRef = database.ref('vals').update(databaseEntry);
-  
 
-  updateDatabaseOrders(); // rerequesting is just a more surefire way to make sure things don't go badly
-  return "Operation succeeded";
+    return new Promise(function(resolve, reject){
+        var databaseEntry = {}
+        databaseEntry[data.order] = data.phone;
+        console.log("runs");
+        var newPushRef = database.ref('vals').update(databaseEntry).then(function(){
+            updateDatabaseOrders(); // rerequesting is just a more surefire way to make sure things don't go badly
+            resolve(true);
+           
+        })
+    });
+  
+        
+ 
+
 }
 server(handleUserRequest);
 
@@ -74,6 +81,10 @@ function requestPub(processNumbers) {
  * Checks all numbers that are part of the numbers that should be searched for
  */
 function checkNumbers(allNumbers, handleMatchedNumbers) {
+   if(numberPairs==undefined || numberPairs == null){
+       return;
+   } 
+    
     var searchNumbers = Object.keys(numberPairs);
 
 

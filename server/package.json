@@ -12,6 +12,7 @@
     "array-intersection": "^0.1.2",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.1",
+    "cors": "^2.8.4",
     "express": "^4.15.4",
     "firebase": "^4.3.1",
     "restler": "3.4.0",
