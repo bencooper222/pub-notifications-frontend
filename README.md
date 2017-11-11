@@ -1,25 +1,18 @@
 # pub-notifications
-Notifications for Vanderbilt Pub's ordering system via Twilio. 
 
+> Frontend for receiving texts to phone when order is up at the pub
 
-## Server
-```
-yarn install
-yarn start
-```
+## Build Setup
 
-
-## Frontend
-```
+``` bash
+# install dependencies
 yarn install
 
-# hot reload at localhost:8080
-yarn run dev 
+# serve with hot reload at localhost:8080
+yarn run dev
 
-# build for prod
+# build for production with minification
 yarn run build
-yarn start
 ```
 
-## License
-MIT. 
+For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
