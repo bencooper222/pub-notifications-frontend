@@ -41,12 +41,12 @@
         </transition>
         <br>
         <br>
-        <p class="extra-info"><a href="https://github.com/bencooper222/pub-notifications/blob/master/disclaimers.md">Disclaimers</a></p>
+        <p class="extra-info"><a href="https://github.com/bencooper222/pub-notifications/blob/master/DISCLAIMERS.md">Disclaimers</a></p>
         <p class="extra-info">|</p>
         <p class="extra-info">  <a href="https://github.com/bencooper222/pub-notifications">Code</a>&nbsp;|</p>
         <p class="extra-info"><a href="http://campusdining.vanderbilt.edu/?action=cmi_yoir&request=screen&location_id=752">  API</a>
         </p>
-        <p id="love">Made with <span class="red">❤</span> by Ben Cooper</p>
+        <p id="love">Made with <span class="red">❤</span> + <span title="Vanilla lattes">☕</span> by <a href="http://benc.io">Ben Cooper</a></p>
 
     </div>
 </template>
@@ -142,7 +142,7 @@
     }
     
     a {
-        color: #42b983;
+        color: rebeccapurple;
     }
     
     #love {
