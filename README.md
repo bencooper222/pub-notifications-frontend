@@ -1,4 +1,4 @@
-# pub-notifications
+# pub-notifications-frontend
 
 > Frontend for receiving texts to phone when order is up at the pub
 
