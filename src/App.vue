@@ -8,18 +8,18 @@
              
                     <div class="field">
                         <label>Order #</label>
-                        <input v-model="order" maxlength="3" title="Three digit order number." id="order" name="order">
+                        <input v-model="order" maxlength="3" title="Three digit order number." id="order" name="order" type="text" pattern="\d*">
                     </div>
                     <br>
                     <div class="field">
                         <label>US Phone #</label>
-                        <input v-model="phone" maxlength="10" title="10 digit number, no dashes, or parentheses." id="phone" name="phone">
+                        <input v-model="phone" maxlength="10" title="10 digit number, no dashes, or parentheses." id="phone" name="phone" type="text" pattern="\d*">
                     </div>
                     <br>
                     <div class="field">
                         <label>Passcode</label>
                         
-                        <input v-model="passcode" maxlength="3" id="passcode" name="passcode">
+                        <input v-model="passcode" maxlength="3" id="passcode" name="passcode" autocapitalize="none">
                     </div>
 
                     <br>
@@ -90,7 +90,7 @@
                 data.passcode = this.passcode;
 
                 let _this = this;
-                fetch('https://pb.benc.io', {
+                fetch('https://pub.benc.io', {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
