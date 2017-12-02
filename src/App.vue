@@ -13,7 +13,7 @@
                     <br>
                     <div class="field">
                         <label>US Phone #</label>
-                        <input v-model="phone" maxlength="10" title="10 digit number, no dashes, or parentheses." id="phone" name="phone" type="text" pattern="\d*">
+                        <input v-model="phone" maxlength="10" title="10 digit number, no dashes, or parentheses." id="phone" name="phone" type="number" pattern="\d*">
                     </div>
                     <br>
                     <div class="field">
