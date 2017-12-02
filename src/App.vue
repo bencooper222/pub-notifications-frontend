@@ -19,7 +19,7 @@
                     <div class="field">
                         <label>Passcode</label>
                         
-                        <input v-model="passcode" maxlength="3" id="passcode" name="passcode" autocapitalize="none">
+                        <input v-model="passcode" maxlength="3" id="passcode" name="passcode" autocapitalize="none" type="password">
                     </div>
 
                     <br>
@@ -35,7 +35,7 @@
             <div v-else-if="submitted === 'failure'">
                 <span id="cross"> ❌ Failure</span>
                 <br>
-                <b>It didn't work. Pretend there's a helpful error message here.</b>
+                <b>It didn't work. HTTP Status code: {{status}} (probably).</b>
                 </br>
             </div>
         </transition>
@@ -46,7 +46,7 @@
         <p class="extra-info">  <a href="https://github.com/bencooper222/pub-notifications-frontend">Code</a>&nbsp;|</p>
         <p class="extra-info"><a href="http://campusdining.vanderbilt.edu/?action=cmi_yoir&request=screen&location_id=752">  API</a>
         </p>
-        <p id="love">Made with <span class="red">❤</span> + <span title="Vanilla lattes">☕</span> by <a href="http://benc.io">Ben Cooper</a></p>
+        <p id="love">Made with <span class="red">❤</span> + <span title="Vanilla lattes">☕</span> by <a href="https://benc.io">Ben Cooper</a></p>
 
     </div>
 </template>
@@ -59,7 +59,8 @@
                 order: "",
                 phone: "",
                 passcode: "",
-                submitted: "no"
+                submitted: "no",
+                status: ""
 
             }
         },
@@ -92,15 +93,28 @@
                 let _this = this;
                 fetch('https://pub.benc.io', {
                     method: 'POST',
-                    mode: 'no-cors',
+                    //mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                     body: 'order=' + this.order + "&phone=" + this.phone + "&passcode=" + this.passcode
-                }).then(function() {
-                    _this.submitted = "success";
-                }).catch(function(error){
-                    _this.submitted = "failure";   
+                }).then(function(response) {
+                    console.log(response);
+                    if (response.status === 200) {
+                        _this.submitted = "success";
+                    } else {
+
+                        _this.status = response.status; 
+                        _this.submitted = "failure";
+                    }
+                    // improve error handling later
+
+                }).catch(function(error) {
+                    
+                     console.log(error);
+                    _this.status = 404;
+                    _this.submitted = "failure";
+
                 });
 
 
@@ -129,10 +143,9 @@
     #check {
         color: green;
     }
-
-    #cross{
+    
+    #cross {
         font-size: 128px;
-
         color: red;
     }
     
