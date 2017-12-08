@@ -8,7 +8,7 @@
              
                     <div class="field">
                         <label>Order #</label>
-                        <input v-model="order" maxlength="3" title="Three digit order number." id="order" name="order" type="text" pattern="\d*">
+                        <input v-model="order" maxlength="3" title="Three digit order number." id="order" name="order" pattern="\d*" type="number">
                     </div>
                     <br>
                     <div class="field">
@@ -99,19 +99,19 @@
                     },
                     body: 'order=' + this.order + "&phone=" + this.phone + "&passcode=" + this.passcode
                 }).then(function(response) {
-                    console.log(response);
-                    if (response.status === 200) {
-                        _this.submitted = "success";
-                    } else {
-
-                        _this.status = response.status; 
+                    console.log('response',response);
+                    if (!response.ok) {
                         _this.submitted = "failure";
+                        _this.status = response.status;
+                        throw Error(response.statusText);
+                    } else {
+                        _this.submitted = "success";
                     }
                     // improve error handling later
 
                 }).catch(function(error) {
-                    
-                     console.log(error);
+
+                    console.log('Error',error);
                     _this.status = 404;
                     _this.submitted = "failure";
 
