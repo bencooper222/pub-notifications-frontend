@@ -93,7 +93,7 @@
                 let _this = this;
                 fetch('https://pubback.benc.io', {
                     method: 'POST',
-                    //mode: 'no-cors',
+                    mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
