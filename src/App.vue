@@ -91,7 +91,7 @@
                 data.passcode = this.passcode;
 
                 let _this = this;
-                fetch('https://pub.benc.io', {
+                fetch('https://pubback.benc.io', {
                     method: 'POST',
                     //mode: 'no-cors',
                     headers: {
