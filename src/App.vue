@@ -46,7 +46,7 @@
         <p class="extra-info">  <a href="https://github.com/bencooper222/pub-notifications-frontend">Code</a>&nbsp;|</p>
         <p class="extra-info"><a href="http://campusdining.vanderbilt.edu/?action=cmi_yoir&request=screen&location_id=752">  API</a>
         </p>
-        <p id="love">Made with <span class="red">❤</span> + <span title="Vanilla lattes">☕</span> by <a href="https://benc.io">Ben Cooper</a></p>
+        <p id="love">Made with <span class="purple">❤</span> + <span title="Vanilla lattes">☕</span> by <a href="https://benc.io">Ben Cooper</a></p>
 
     </div>
 </template>
@@ -169,8 +169,8 @@
         margin-bottom: 0px;
     }
     
-    .red {
-        color: red;
+    .purple {
+        color: rebeccapurple;
     }
     
     .field>label {
