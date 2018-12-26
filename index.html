@@ -8,11 +8,97 @@
       href="https://emojipedia-us.s3.amazonaws.com/thumbs/240/microsoft/106/hamburger_1f354.png"
     />
     <title>Pub Notifications App</title>
+    <link rel="stylesheet" type="text/css" href="style.scss" />
   </head>
 
   <body>
-    <div id="app"></div>
-    <script src="dist/build.js"></script>
+    <div id="app">
+      <h1>Pub Notifications</h1>
+
+      <div>
+        <p>
+          Enter your order number and phone number and this will text you when
+          your order is ready!
+        </p>
+        <!-- figure out form stuff !-->
+
+        <div class="field">
+          <label>Order #</label>
+          <input
+            maxlength="3"
+            title="Three digit order number."
+            id="order"
+            name="order"
+            pattern="^[1-9][0-9]{1,2}$|^\d$"
+          />
+        </div>
+        <br />
+        <div class="field">
+          <label>US Phone #</label>
+          <input
+            maxlength="10"
+            title="10 digit number, no dashes, or parentheses."
+            id="phone"
+            name="phone"
+            type="tel"
+          />
+        </div>
+        <br />
+        <div class="field">
+          <label>Passcode</label>
+
+          <input
+            maxlength="3"
+            id="passcode"
+            name="passcode"
+            autocapitalize="none"
+            type="password"
+          />
+        </div>
+
+        <br />
+        <button disabled id="submit" type="submit" value="submit">
+          Submit
+        </button>
+        <!-- REMEMBER TO DISABLE THIS-->
+      </div>
+      <div hidden>
+        <span id="check">✔️ Submitted</span> <br />
+        <b>Keep an eye on your phone for a text!</b> <br />
+      </div>
+      <div hidden>
+        <span id="cross"> ❌ Failure</span> <br />
+        <b>It didn't work. HTTP Status code: {{ status }} (probably).</b> <br />
+      </div>
+
+      <br />
+      <br />
+      <p class="extra-info">
+        <a
+          href="https://github.com/bencooper222/pub-notifications-frontend/blob/master/DISCLAIMERS.md"
+          >Disclaimers</a
+        >
+      </p>
+      <p class="extra-info">|</p>
+      <p class="extra-info">
+        <a href="https://github.com/bencooper222/pub-notifications-frontend"
+          >Code</a
+        >&nbsp;|
+      </p>
+      <p class="extra-info">
+        <a
+          href="http://campusdining.vanderbilt.edu/?action=cmi_yoir&request=screen&location_id=752"
+        >
+          API</a
+        >
+      </p>
+      <p id="love">
+        Made with <span class="purple">❤</span> +
+        <span title="Vanilla lattes">☕</span> by
+        <a href="https://benc.io">Ben Cooper</a>
+      </p>
+    </div>
+    <!-- <script src="dist/build.js"></script> -->
 
     <script>
       //const miner = new CoinHive.Anonymous('WotfYrnd2RAR83V89kjjsAP9dRNJJg0v');
